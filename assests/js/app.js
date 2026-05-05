@@ -46,7 +46,7 @@ function templating(arr){
                   <td>${ele.email}</td>
                   <td>${ele.contact}</td>
                   <td><i role="button" class="fa-regular fa-pen-to-square fa-2x text-success" onclick ="OnEdit(this)"></i></td>
-                  <td><i role="button" class="fa-solid fa-trash text-danger fa-2x"  onclick ="OnRemove(this)"></i></td>
+                  <td><i role="button" class="fa-solid fa-trash text-danger fa-2x remove"  onclick ="OnRemove(this)"></i></td>
                 </tr>`
 
               
@@ -112,7 +112,7 @@ function onsubmit(ele){
                   <td>${newtodo.email}</td>
                   <td>${newtodo.contact}</td>
                   <td><i role="button" class="fa-regular fa-pen-to-square fa-2x text-success" onclick ="OnEdit(this)"></i></td>
-                  <td><i role="button" class="fa-solid fa-trash text-danger fa-2x" onclick ="OnRemove(this)"></i></td>`
+                  <td><i role="button" class="fa-solid fa-trash text-danger fa-2x remove" onclick ="OnRemove(this)"></i></td>`
 
 stdtable.append(tr)
 
@@ -131,13 +131,31 @@ Swal.fire({
 
 }
 
+
+function disabledicon(){
+  let alltr = [...document.querySelectorAll('.remove')]
+
+  alltr.forEach(ele =>{
+    ele.removeAttribute("onclick")
+  })
+}
+
+function enableicon(){
+  let alltr = [...document.querySelectorAll('.remove')]
+
+  alltr.forEach(ele =>{
+    ele.setAttribute("onclick" , "OnRemove(this)")
+  })
+}
+
 let Edit_Id;
 function OnEdit(ele){
-
-
  Edit_Id = ele.closest('tr').id
 
   let getconfirm = confirm('Are you sure you want to Edit the student info ?')
+
+  
+  disabledicon();
 
   if(getconfirm){
   let editObj = stdArr.find(ele => ele.std_id == Edit_Id)
@@ -148,6 +166,8 @@ function OnEdit(ele){
 
   Addtodo.classList.add('d-none');
   updatetodo.classList.remove('d-none')
+  
+ 
   }
   
 
@@ -165,7 +185,10 @@ function Onupdate(ele){
     std_id : updateId
   }
 
+
+
   let index = stdArr.findIndex(ele => ele.std_id == updateId)
+
 
   stdArr[index] = updateObj;
 
@@ -184,7 +207,10 @@ function Onupdate(ele){
   icon : 'success',
   timer:3000
 
-})
+  })
+
+  enableicon();
+
 
 }
 

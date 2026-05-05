@@ -7,6 +7,9 @@ const contact = document.getElementById('contact')
 const stdtable = document.getElementById('stdtable')
 const tablehead = document.getElementById('tablehead')
 const nostudent = document.getElementById('nostudent')
+const Addtodo = document.getElementById('Addtodo')
+const updatetodo = document.getElementById('updatetodo')
+
 
 let stdArr =[
               {
@@ -108,8 +111,8 @@ function onsubmit(ele){
                   <td>${newtodo.fname} ${newtodo.lname}</td>
                   <td>${newtodo.email}</td>
                   <td>${newtodo.contact}</td>
-                  <td><i role="button" class="fa-regular fa-pen-to-square fa-2x text-success"></i></td>
-                  <td><i role="button" class="fa-solid fa-trash text-danger fa-2x"></i></td>`
+                  <td><i role="button" class="fa-regular fa-pen-to-square fa-2x text-success" onclick ="OnEdit(this)"></i></td>
+                  <td><i role="button" class="fa-solid fa-trash text-danger fa-2x" onclick ="OnRemove(this)"></i></td>`
 
 stdtable.append(tr)
 
@@ -128,7 +131,65 @@ Swal.fire({
 
 }
 
+let Edit_Id;
+function OnEdit(ele){
+
+
+ Edit_Id = ele.closest('tr').id
+
+  let getconfirm = confirm('Are you sure you want to Edit the student info ?')
+
+  if(getconfirm){
+  let editObj = stdArr.find(ele => ele.std_id == Edit_Id)
+  fname.value = editObj.fname;
+  lname.value = editObj.lname;
+  email.value = editObj.email;
+  contact.value = editObj.contact;
+
+  Addtodo.classList.add('d-none');
+  updatetodo.classList.remove('d-none')
+  }
+  
+
+
+}
+
+function Onupdate(ele){
+  let updateId = Edit_Id;
+
+  let updateObj = {
+    fname : fname.value,
+    lname : lname.value,
+    email : email.value,
+    contact : contact.value,
+    std_id : updateId
+  }
+
+  let index = stdArr.findIndex(ele => ele.std_id == updateId)
+
+  stdArr[index] = updateObj;
+
+  let tr = document.getElementById(updateId).children
+
+  tr[1].innerText = `${updateObj.fname} ${updateObj.lname}`;
+  tr[2].innerText = updateObj.email;
+  tr[3].innerText = updateObj.contact;
+
+  studentform.reset();
+  Addtodo.classList.remove('d-none')
+  updatetodo.classList.add('d-none')
+
+  Swal.fire({
+  title : `The  Student ${updateObj.fname}  ${updateObj.lname} is updated successfully !!!`,
+  icon : 'success',
+  timer:3000
+
+})
+
+}
+
 
 
 templating(stdArr);
 studentform.addEventListener('submit',onsubmit)
+updatetodo.addEventListener('click',Onupdate)

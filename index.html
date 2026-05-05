@@ -10,7 +10,7 @@
 </head>
 <body>
   <header class="header">
-    <h1>Student Info</h1>
+    <h1>Student Todo</h1>
   </header>
   <div class="container-fluid mt-5">
     <div class="row">
@@ -35,7 +35,7 @@
                 <input type="text" class="form-control" id="contact">
               </div>
 
-              <button class="btn btn-primary btn-sm btn-block "> Add Student Info</button>
+              <button class="btn btn-primary btn-sm btn-block" > Add Student Info</button>
 
             </form>
           </div>
@@ -45,7 +45,7 @@
         <div class="card">
           <div class="card-body">
             <table class="table table-bordered m-0" id="stdtable">
-              <thead>
+              <thead id="tablehead">
                 <th>Sr.no</th>
                 <th>Full name</th>
                 <th>Email</th>
@@ -54,9 +54,12 @@
                 <th>Remove</th>
               </thead>
               <tbody id="tablebody">
-               
+              
               </tbody>
+              
             </table>
+              <p class="alert alert-primary d-none" id="nostudent">No Student Data Found !!!</p>
+
           </div>
         </div>
       </div>

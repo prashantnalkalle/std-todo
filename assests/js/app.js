@@ -5,10 +5,8 @@ const lname = document.getElementById('lname')
 const email = document.getElementById('email')
 const contact = document.getElementById('contact')
 const stdtable = document.getElementById('stdtable')
-
-
-
-
+const tablehead = document.getElementById('tablehead')
+const nostudent = document.getElementById('nostudent')
 
 let stdArr =[
               {
@@ -35,7 +33,7 @@ let stdArr =[
 
 ]
 
-let num =0;
+
 function templating(arr){
   let result =``
   arr.forEach((ele,i) => {
@@ -48,12 +46,48 @@ function templating(arr){
                   <td><i role="button" class="fa-solid fa-trash text-danger fa-2x"  onclick ="OnRemove(this)"></i></td>
                 </tr>`
 
-                num++;
+              
   });
 
 
   tablebody.innerHTML =result;
 }
+
+function OnRemove(ele){
+  let getconfirm = confirm('Are you sure you want to remove the student ?')
+
+  if(getconfirm){
+  let removeID = ele.closest('tr').id;
+
+  let index = stdArr.findIndex(ele => ele.std_id == removeID)
+
+  let removeObj = stdArr.splice(index,1);
+
+  ele.closest('tr').remove();
+
+  let trs = document.querySelectorAll('#tablebody tr')
+
+  trs.forEach((ele,i) =>{
+    ele.firstElementChild.innerText = i+1;
+  })
+
+  Swal.fire({
+    title : `The Student ${removeObj[0].fname}  ${removeObj[0].lname} is removed successfully!!!`,
+    icon : 'success',
+    timer : 3000
+  })
+  }
+
+  if(stdArr.length == 0){
+    tablehead.classList.add('d-none')
+    nostudent.classList.remove('d-none')
+
+  }
+
+
+  
+}
+
 
 function onsubmit(ele){
   ele.preventDefault();
@@ -67,10 +101,10 @@ function onsubmit(ele){
 
   stdArr.push(newtodo)
   studentform.reset()
-  num+=1;
+  
   let tr = document.createElement('tr')
   tr.id = newtodo.std_id;
-  tr.innerHTML = `<td>${num}</td>
+  tr.innerHTML = `<td>${stdArr.length}</td>
                   <td>${newtodo.fname} ${newtodo.lname}</td>
                   <td>${newtodo.email}</td>
                   <td>${newtodo.contact}</td>
@@ -78,6 +112,12 @@ function onsubmit(ele){
                   <td><i role="button" class="fa-solid fa-trash text-danger fa-2x"></i></td>`
 
 stdtable.append(tr)
+
+ if(stdArr.length > 0){
+    tablehead.classList.remove('d-none')
+    nostudent.classList.add('d-none')
+
+  }
 
 Swal.fire({
   title : `The New Student ${newtodo.fname}  ${newtodo.lname} is added successfully !!!`,

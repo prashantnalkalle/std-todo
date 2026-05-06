@@ -4,6 +4,15 @@
     box-sizing: border-box;
 }
 
+.container{
+    
+    width: 100%;
+}
+
+.row{
+    display: flex;
+}
+
 body{
     background-color: #ededed;
 
@@ -16,5 +25,22 @@ body{
 }
 .card{
     margin: 0;
+}
+
+@media (max-width : 600px){
+    .row{
+        flex-direction: column;
+    }
+
+    .card{
+        margin-top: 20px;
+        overflow: scroll;
+    }
+    .col--md-4,.col-md-8{
+        width: 100%;
+    }
+    
+
+
 }
 

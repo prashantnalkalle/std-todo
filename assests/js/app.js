@@ -131,22 +131,20 @@ Swal.fire({
 
 }
 
-
-function disabledicon(){
+function disabledIcon(){
   let alltr = [...document.querySelectorAll('.remove')]
 
-  alltr.forEach(ele =>{
-    ele.removeAttribute("onclick")
-  })
+  alltr.forEach(ele => ele.removeAttribute('onclick'))
 }
 
-function enableicon(){
+
+function enabledicon(){
   let alltr = [...document.querySelectorAll('.remove')]
 
-  alltr.forEach(ele =>{
-    ele.setAttribute("onclick" , "OnRemove(this)")
-  })
+  alltr.forEach(ele => ele.setAttribute('onclick',"OnRemove(this)"))
 }
+
+
 
 let Edit_Id;
 function OnEdit(ele){
@@ -154,8 +152,8 @@ function OnEdit(ele){
 
   let getconfirm = confirm('Are you sure you want to Edit the student info ?')
 
-  
-  disabledicon();
+ disabledIcon()
+ 
 
   if(getconfirm){
   let editObj = stdArr.find(ele => ele.std_id == Edit_Id)
@@ -209,7 +207,7 @@ function Onupdate(ele){
 
   })
 
-  enableicon();
+ enabledicon()
 
 
 }
